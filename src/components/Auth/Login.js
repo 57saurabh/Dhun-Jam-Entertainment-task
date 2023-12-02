@@ -23,8 +23,9 @@ const Login = () => {
       
           const response = await axios.post("https://stg.dhunjam.in/account/admin/login", formData);
           console.log(response.data);
-          const { token } = response.data.data;
+          const { token, id } = response.data.data;
           token_d(token);
+          login(id)
             // if (response.response === "success") {
                 navigate('/dashboard')
             // }

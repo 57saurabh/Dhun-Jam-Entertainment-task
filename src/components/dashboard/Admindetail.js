@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement } from 'chart.js';
 import { Chart as ChartJS } from 'chart.js/auto';
 import './admindetails.css'
+import UserContext from '../../Context/UserContext';
 
 
 Chart.register(CategoryScale, LinearScale, BarElement);
 
 const AdminDetails = () => {
+    const {user} = useContext(UserContext);
     const [adminDetails, setAdminDetails] = useState(null);
     const [chargeCustomers, setChargeCustomers] = useState(true);
     const [customAmount, setCustomAmount] = useState(0);
     const [regularAmounts, setRegularAmounts] = useState([0, 0, 0, 0]);
   
     useEffect(() => {
-      fetch('https://stg.dhunjam.in/account/admin/4')
+    //   fetch(`https://stg.dhunjam.in/account/admin/${user}`)
+      fetch(`https://stg.dhunjam.in/account/admin/4`)
         .then(response => response.json())
         .then(data => {
           setAdminDetails(data.data);
-          // Set initial values based on the fetched data
           setChargeCustomers(data.data.charge_customers === 'true');
           setCustomAmount(data.data.amount.category_6);
           setRegularAmounts([
